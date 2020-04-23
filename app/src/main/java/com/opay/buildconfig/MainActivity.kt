@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,18 @@ class MainActivity : AppCompatActivity() {
     fun goThird(view: View) {
         val intent = Intent(this, ThirdActivity::class.java)
         startActivity(intent)
+    }
+
+
+    var firstTime = 0L
+    override fun onBackPressed() {
+        if ((System.currentTimeMillis() - firstTime) > 2000) {
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_LONG).show()
+            firstTime = System.currentTimeMillis()
+            return
+        }
+        super.onBackPressed()
+
     }
 
 }
