@@ -23,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun goFourth(view: View) {
+        val intent = Intent(this, FourthActivity::class.java)
+        startActivity(intent)
+    }
+
 
     var firstTime = 0L
     override fun onBackPressed() {

@@ -6,26 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="156dp"
-        android:onClick="goSecond"
-        android:text="goSecond" />
 
-    <Button
+    <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-2dp"
-        android:layout_marginTop="227dp"
-        android:onClick="goThird"
-        android:text="goThird" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="177dp"
+        android:textSize="20dp"
+        android:layout_marginTop="226dp"
+        android:text="fourth main" />
 
     <ImageView
         android:layout_width="wrap_content"
