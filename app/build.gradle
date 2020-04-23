@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply from: "../buildTypes.gradle"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -15,18 +16,55 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    flavorDimensions "tier"//风味维度
+    //产品风格
+    productFlavors {
+//        免费
+        free {
+            dimension "tier"
+            applicationIdSuffix '.free'
+//            applicationId 'com.opay.buildconfig.free'
+        }
+
+        paid {
+            dimension "tier"
+            applicationIdSuffix '.paid'
+//            applicationId 'com.opay.buildconfig.paid'
         }
     }
+
+    splits {
+        // Settings to build multiple APKs based on screen density.
+//        依据密度区分包
+        density {
+
+            // Enable or disable building multiple APKs.
+            enable false
+
+            // Exclude these densities when building multiple APKs.
+            exclude "ldpi", "tvdpi", "xxxhdpi", "xhdpi", "400dpi", "560dpi", "universal"
+        }
+    }
+//    buildTypes {
+//        release {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//        debug{
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//        dev{
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.0.2'
 
