@@ -34,15 +34,25 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//task getaaa(){
-//    println("===2==>"+(1<<2))
-//    println("===4==>"+(1<<4))
-//    println("===6==>"+(1<<6))
-//    println("===8==>"+(1<<8))
-//    println("===10==>"+(1<<10))
-//    println("===12==>"+(1<<12))
-//    println("===14==>"+(1<<14))
-//    println("=====>"+(1<<16))
-//    println("===18==>"+(1<<18))
-//    println("=====>"+(1<<20))
+//执行命令 ./gradlew getaaa
+// ./gradlew assembleDebug
+task getaaa(){
+    println("===2==>"+(1<<2))
+    println("===4==>"+(1<<4))
+    println("===6==>"+(1<<6))
+    println("===8==>"+(1<<8))
+    println("===10==>"+(1<<10))
+    println("===12==>"+(1<<12))
+    println("===14==>"+(1<<14))
+    println("=====>"+(1<<16))
+    println("===18==>"+(1<<18))
+    println("=====>"+(1<<20))
+}
+
+//task asD(){
+//    "./gradlew assembleDebug --offline".execute()
+//}
+//
+//task IFD(){
+//    "./gradlew installFreeDebug".execute()
 //}

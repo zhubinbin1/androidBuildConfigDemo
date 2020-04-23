@@ -16,21 +16,32 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    flavorDimensions "tier"//风味维度
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+        }
+    }
+    flavorDimensions "stage"//, "mode"//风味维度
     //产品风格
     productFlavors {
 //        免费
         free {
-            dimension "tier"
+            dimension "stage"
             applicationIdSuffix '.free'
 //            applicationId 'com.opay.buildconfig.free'
         }
 
         paid {
-            dimension "tier"
+            dimension "stage"
             applicationIdSuffix '.paid'
 //            applicationId 'com.opay.buildconfig.paid'
         }
+//        dev {
+//            dimension "mode"
+//            applicationIdSuffix '.paid'
+////            applicationId 'com.opay.buildconfig.paid'
+//        }
     }
 
     splits {
@@ -39,12 +50,31 @@ android {
         density {
 
             // Enable or disable building multiple APKs.
-            enable false
-
+            enable true
             // Exclude these densities when building multiple APKs.
-            exclude "ldpi", "tvdpi", "xxxhdpi", "xhdpi", "400dpi", "560dpi", "universal"
+//            exclude "ldpi", "tvdpi", "xxxhdpi", "xhdpi", "400dpi", "560dpi", "universal"
+            reset()
+            include "xxxhdpi", "xxhdpi"
+//            compatibleScreens 'small', 'normal', 'large', 'xlarge'
+        }
+        abi {
+            enable true
+            reset()
+//            include "x86", "x86_64"
+            include "x86_64", 'armeabi-v7a'
+            universalApk true
         }
     }
+    signingConfigs {
+        release {
+            storeFile file("myreleasekey.keystore")
+            storePassword "password"
+            keyAlias "MyReleaseKey"
+            keyPassword "password"
+        }
+    }
+
+
 //    buildTypes {
 //        release {
 //            minifyEnabled true
@@ -60,7 +90,33 @@ android {
 //        }
 //    }
 }
+ext.abiCodes = ['armeabi-v7a': 1, x86: 2, x86_64: 3]
+import com.android.build.OutputFile
 
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+android.applicationVariants.all { variant ->
+//    variant.outputs.each { output ->
+    variant.outputs.all { output ->
+        def baseAbiVersionCode =
+                project.ext.abiCodes.get(output.getFilter(OutputFile.ABI))
+        println("======>>>>output=:" + output + "\nbaseAbiVersionCode=:" + baseAbiVersionCode + "\noutput.outputFile=:" + output.outputFile)
+        def outputFile = output.outputFile
+        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+            //这里修改apk文件名
+            outputFileName = "buildConfig_${output.baseName}-${android.defaultConfig.versionCode}-${android.defaultConfig.versionName}-${releaseTime()}.apk"
+//            println("fileName====>" + outputFileName)
+            //以下不起作用了
+//            output.outputFile = new File(outputFile.parent, fileName)
+        }
+        if (baseAbiVersionCode != null) {
+            output.versionCodeOverride =
+                    baseAbiVersionCode * 1000 + variant.versionCode
+        }
+    }
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
