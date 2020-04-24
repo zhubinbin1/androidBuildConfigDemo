@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goSecond(view: View) {
+//        BuildConfig.Log
         val intent = Intent(this, SecondActivity::class.java)
         startActivity(intent)
     }

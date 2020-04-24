@@ -2,16 +2,23 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            manifestPlaceholders = [
+                    "GOOGLE_API_KEY": "AIzaSyDKhCSMVZOSE1omFWm3igENY1xCegxJv6s",
+                    "analyticsHost" : "https://tracking.gateway.opayweb.com"
+            ]
+            buildConfigField "Boolean", "Log", "false"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            buildConfigField "Boolean", "Log", "true"
             ext.enableCrashlytics = false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 //        dev {
+//            debuggable true
 //            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+////            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 //        }
     }
 
